@@ -6,6 +6,13 @@
   "engines": {
     "vscode": "^1.72.0"
   },
+  "keywords": [
+    "refactor",
+    "javascript",
+    "typescript",
+    "console",
+    "tools"
+  ],
   "categories": [
     "Other"
   ],
@@ -23,6 +30,18 @@
       {
         "command": "console-generator.delete-file-console",
         "title": "delete-file-console"
+      }
+    ],
+    "keybindings": [
+      {
+        "command": "console-generator.generate-console",
+        "key": "ctrl+shift+l",
+        "mac": "cmd+shift+l"
+      },
+      {
+        "command": "console-generator.delete-file-console",
+        "key": "ctrl+shift+d",
+        "mac": "cmd+shift+d"
       }
     ]
   },
