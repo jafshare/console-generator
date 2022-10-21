@@ -1,0 +1,52 @@
+{
+  "name": "console-generator",
+  "displayName": "console-generator",
+  "description": "一个console快捷生成插件，提供快速生成console语句，让你打印快人一步",
+  "version": "0.0.1",
+  "engines": {
+    "vscode": "^1.72.0"
+  },
+  "categories": [
+    "Other"
+  ],
+  "activationEvents": [
+    "onCommand:console-generator.generator"
+  ],
+  "main": "./out/extension.js",
+  "contributes": {
+    "commands": [
+      {
+        "command": "console-generator.generator",
+        "title": "generator"
+      }
+    ]
+  },
+  "scripts": {
+    "vscode:prepublish": "pnpm run compile",
+    "compile": "tsc -p ./",
+    "watch": "tsc -watch -p ./",
+    "pretest": "pnpm run compile && pnpm run lint",
+    "lint": "eslint src --ext ts",
+    "test": "node ./out/test/runTest.js",
+    "test:unit": "vitest -r src"
+  },
+  "devDependencies": {
+    "@types/babel__traverse": "^7.18.2",
+    "@types/glob": "^8.0.0",
+    "@types/mocha": "^10.0.0",
+    "@types/node": "16.x",
+    "@types/vscode": "^1.72.0",
+    "@typescript-eslint/eslint-plugin": "^5.38.1",
+    "@typescript-eslint/parser": "^5.38.1",
+    "@vscode/test-electron": "^2.1.5",
+    "eslint": "^8.24.0",
+    "glob": "^8.0.3",
+    "mocha": "^10.0.0",
+    "typescript": "^4.8.4",
+    "vitest": "^0.24.3"
+  },
+  "dependencies": {
+    "@babel/parser": "^7.19.6",
+    "@babel/traverse": "^7.19.6"
+  }
+}
