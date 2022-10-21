@@ -3,6 +3,7 @@ lockfileVersion: 5.4
 specifiers:
   '@babel/parser': ^7.19.6
   '@babel/traverse': ^7.19.6
+  '@babel/types': ^7.19.4
   '@types/babel__traverse': ^7.18.2
   '@types/glob': ^8.0.0
   '@types/mocha': ^10.0.0
@@ -22,6 +23,7 @@ dependencies:
   '@babel/traverse': registry.npmmirror.com/@babel/traverse/7.19.6
 
 devDependencies:
+  '@babel/types': registry.npmmirror.com/@babel/types/7.19.4
   '@types/babel__traverse': registry.npmmirror.com/@types/babel__traverse/7.18.2
   '@types/glob': registry.npmmirror.com/@types/glob/8.0.0
   '@types/mocha': registry.npmmirror.com/@types/mocha/10.0.0

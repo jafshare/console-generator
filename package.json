@@ -10,14 +10,19 @@
     "Other"
   ],
   "activationEvents": [
-    "onCommand:console-generator.generator"
+    "onCommand:console-generator.generate-console",
+    "onCommand:console-generator.delete-file-console"
   ],
   "main": "./out/extension.js",
   "contributes": {
     "commands": [
       {
-        "command": "console-generator.generator",
-        "title": "generator"
+        "command": "console-generator.generate-console",
+        "title": "generate-console"
+      },
+      {
+        "command": "console-generator.delete-file-console",
+        "title": "delete-file-console"
       }
     ]
   },
@@ -31,6 +36,7 @@
     "test:unit": "vitest -r src"
   },
   "devDependencies": {
+    "@babel/types": "^7.19.4",
     "@types/babel__traverse": "^7.18.2",
     "@types/glob": "^8.0.0",
     "@types/mocha": "^10.0.0",

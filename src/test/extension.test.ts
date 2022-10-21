@@ -22,38 +22,50 @@ const nestingObjectCode = `const name = {
 describe("console-generator tests", () => {
   test("普通表达式", () => {
     const code = normalCode;
-    const { offset, identifier } = jsHandler(code, 9);
-    expect(offset).toBe(code.length);
+    const { identifier, position } = jsHandler.generate(code, 9);
+    expect(position).toEqual({ line: 1, column: 17, index: 17 });
     expect(identifier).toBe("test");
   });
   test("普通函数", () => {
     const code = functionCode;
-    const { offset, identifier } = jsHandler(code, 12);
-    expect(offset).toBe(code.length);
+    const { identifier, position } = jsHandler.generate(code, 12);
+    expect(position).toEqual({ line: 3, column: 1, index: code.length });
     expect(identifier).toBe("getName");
+  });
+  test("函数参数", () => {
+    const code = functionCode;
+    const { identifier, position } = jsHandler.generate(code, 18);
+    expect(position).toEqual({ line: 1, column: 21, index: 21 });
+    expect(identifier).toBe("a");
+  });
+  test("函数返回", () => {
+    const code = functionCode;
+    const { identifier, position } = jsHandler.generate(code, 33);
+    expect(position).toEqual({ line: 1, column: 2, index: 25 });
+    expect(identifier).toBe("a");
   });
   test("箭头函数", () => {
     const code = arrowFunctionCode;
-    const { offset, identifier } = jsHandler(code, 8);
-    expect(offset).toBe(code.length);
+    const { position, identifier } = jsHandler.generate(code, 8);
+    expect(position).toEqual({ line: 3, column: 1, index: code.length });
     expect(identifier).toBe("getName");
   });
   test("对象表达式", () => {
     const code = objectCode;
-    const { offset, identifier } = jsHandler(code, 8);
-    expect(offset).toBe(code.length);
+    const { position, identifier } = jsHandler.generate(code, 8);
+    expect(position).toEqual({ line: 4, column: 1, index: code.length });
     expect(identifier).toBe("name");
   });
   test("对象表达式-属性", () => {
     const code = objectCode;
-    const { offset, identifier } = jsHandler(code, 33);
-    expect(offset).toBe(code.length);
+    const { position, identifier } = jsHandler.generate(code, 33);
+    expect(position).toEqual({ line: 4, column: 1, index: code.length });
     expect(identifier).toBe("age");
   });
   test("嵌套对象", () => {
     const code = nestingObjectCode;
-    const { offset, identifier } = jsHandler(code, 8);
-    expect(offset).toBe(code.length);
+    const { position, identifier } = jsHandler.generate(code, 8);
+    expect(position).toEqual({ line: 8, column: 1, index: code.length });
     expect(identifier).toBe("name");
   });
 });

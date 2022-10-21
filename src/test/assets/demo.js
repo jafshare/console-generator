@@ -11,5 +11,17 @@ let start;
 let end;
 let time = end - start;
 function say(name, age) {
+  
+  
   return name + ",你好";
 }
+
+const outer = (name) => {
+  
+  return (age) => {
+    
+    
+    return name + age;
+  };
+};
+
