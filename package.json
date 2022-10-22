@@ -2,7 +2,7 @@
   "name": "console-generator",
   "displayName": "console-generator",
   "description": "一个console快捷生成插件，提供快速生成console语句，让你打印快人一步",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "publisher": "Jianganfu",
   "engines": {
     "vscode": "^1.72.0"
@@ -83,6 +83,7 @@
   },
   "devDependencies": {
     "@babel/types": "^7.19.4",
+    "@types/babel__generator": "^7.6.4",
     "@types/babel__traverse": "^7.18.2",
     "@types/glob": "^8.0.0",
     "@types/mocha": "^10.0.0",
@@ -98,6 +99,7 @@
     "vitest": "^0.24.3"
   },
   "dependencies": {
+    "@babel/generator": "^7.19.6",
     "@babel/parser": "^7.19.6",
     "@babel/traverse": "^7.19.6",
     "@vue/compiler-sfc": "^3.2.41"

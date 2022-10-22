@@ -1,11 +1,13 @@
 import { parser } from "../core/parser";
-import traverse from "@babel/traverse";
+import traverse, { NodePath } from "@babel/traverse";
+import generator from "@babel/generator";
 import { inRange } from "../utils/inRange";
 import {
   isFunctionDeclaration,
   isBlockStatement,
   isReturnStatement,
   isExpressionStatement,
+  Identifier,
 } from "@babel/types";
 import type { Position } from "./index";
 export function calcPosition(
@@ -18,6 +20,50 @@ export function calcPosition(
     column: p.column + p1.column,
     index: (p.index || 0) + (p1.index || 0),
   };
+}
+/**
+ * 获取标识符，由于存在obj.name的情况,所以需要拼接父路径
+ * @param path
+ */
+function getIdentifier(path: NodePath<Identifier>, root: string = "") {
+  let identifier = "";
+  let currentPath: any = path;
+  let parentPath = path.parentPath;
+  /**-----------------------------------------------------------------------------------------------------------------------
+   * TODO
+   * 处理如下情况:
+   * const info = {
+   *  name: "张三",
+   *   age: 23,
+   *  detail: {
+   *    address: "home",
+   *  },
+   *};
+   *
+   *
+   *
+   *-----------------------------------------------------------------------------------------------------------------------**/
+  /**-----------------------------------------------------------------------------------------------------------------------
+   * 处理取对象属性的情况,parentPath.node.property === path.node是为了处理a.b的时候，a也被识别为child的情况
+   * 例如: const name = a.b.name
+   *-----------------------------------------------------------------------------------------------------------------------**/
+  while (
+    parentPath &&
+    parentPath.isMemberExpression() &&
+    parentPath.node.property === path.node
+  ) {
+    currentPath = parentPath;
+    parentPath = parentPath.parentPath;
+  }
+  console.log("node:", currentPath.node);
+  // 如果path和currentPath一致，说明没有嵌套取值
+  if (path.node === currentPath.node) {
+    identifier = path.node.name;
+  } else {
+    // 根据当前的node生成语句，不用手动生成
+    identifier = generator(currentPath.node, {}).code;
+  }
+  return root ? `${root}.${identifier}` : identifier;
 }
 
 function generate(code: string, offset: number) {
@@ -35,7 +81,7 @@ function generate(code: string, offset: number) {
         if (inRange(offset, node.start as number, node.end as number)) {
           //中断遍历
           path.stop();
-          identifier = path.node.name;
+          identifier = getIdentifier(path);
           // 处理函数的情况
           const parentPath = path.parentPath;
           if (parentPath) {
@@ -65,7 +111,10 @@ function generate(code: string, offset: number) {
           }
           // 处理表达式的情况
           const nearestParentPath = path.findParent(
-            (path) => path.isVariableDeclaration() || path.isReturnStatement()
+            (path) =>
+              path.isVariableDeclaration() || // 变量语句
+              path.isReturnStatement() || // 返回语句
+              path.isAssignmentExpression() // 赋值语句
           );
           if (nearestParentPath) {
             // TODO 处理没有代码块包裹的情况

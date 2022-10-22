@@ -62,7 +62,7 @@ export function generateConsoleStatement(
       return flag;
     });
     if (customPrefix.style) {
-      logStr = `console.log("%c ${template}","${customPrefix?.style}",${identifier})`;
+      logStr = `console.log(\`%c ${template}","${customPrefix?.style}\`,${identifier})`;
     } else {
       logStr = `console.log("${template}",${identifier})`;
     }

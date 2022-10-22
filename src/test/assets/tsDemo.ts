@@ -13,14 +13,12 @@ function say(name: string, age: number) {
 }
 
 const outer = (name: string) => {
-  console.log("name:",name);
-  console.log("name:", name);
-  console.log(
-    "%c name:",
-    "color: white; background: rgb(0, 122, 204); font-size: 12px;",
-    name
-  );
+  const funName = outer.name;
+  const result = outer("name")(12).name;
   return (age: number) => {
-    return name + age;
+    return {
+      name: { name },
+      age,
+    };
   };
 };
