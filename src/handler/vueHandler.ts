@@ -40,17 +40,20 @@ function deleteConsole(code: string) {
   if (!loc) return [];
   const scriptCode = loc.source;
   const positions = jsHandler.delete(scriptCode);
-  return positions.map(([startPos, endPos]) => {
+  return positions.map((posRange) => {
+    const [startPos, endPos] = posRange;
     // 需要增加script的偏移量
     const finalStartPos = calcPosition(startPos, {
       line: loc.start.line - 1,
       column: 0,
-    });
+    })!;
     const finalEndPos = calcPosition(endPos, {
       line: loc.start.line - 1,
       column: 0,
-    });
-    return [finalStartPos, finalEndPos];
+    })!;
+    posRange[0] = finalStartPos;
+    posRange[1] = finalEndPos;
+    return posRange;
   });
 }
 export const vueHandler = {
