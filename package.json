@@ -3,6 +3,7 @@
   "displayName": "console-generator",
   "description": "一个console快捷生成插件，提供快速生成console语句，让你打印快人一步",
   "version": "0.0.1",
+  "publisher": "Jianganfu",
   "engines": {
     "vscode": "^1.72.0"
   },
@@ -47,6 +48,7 @@
   },
   "scripts": {
     "vscode:prepublish": "pnpm run compile",
+    "vscode:publish": "vsce package",
     "compile": "tsc -p ./",
     "watch": "tsc -watch -p ./",
     "pretest": "pnpm run compile && pnpm run lint",
