@@ -17,10 +17,9 @@ function say(name, age) {
 }
 
 const outer = (name) => {
-  
+  console.log("name:",name);
+  console.log("%c name:","color: white; background: rgb(0, 122, 204); font-size: 12px;",name);
   return (age) => {
-    
-    
     return name + age;
   };
 };

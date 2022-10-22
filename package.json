@@ -15,7 +15,8 @@
     "tools"
   ],
   "categories": [
-    "Other"
+    "Other",
+    "Snippets"
   ],
   "activationEvents": [
     "onCommand:console-generator.generate-console",
@@ -26,11 +27,11 @@
     "commands": [
       {
         "command": "console-generator.generate-console",
-        "title": "generate-console"
+        "title": "生成console语句"
       },
       {
         "command": "console-generator.delete-file-console",
-        "title": "delete-file-console"
+        "title": "删除文件中的console语句"
       }
     ],
     "keybindings": [
@@ -44,7 +45,31 @@
         "key": "ctrl+shift+d",
         "mac": "cmd+shift+d"
       }
-    ]
+    ],
+    "configuration": {
+      "type": "object",
+      "title": "console生成器",
+      "properties": {
+        "consoleGenerator.enable": {
+          "type": "boolean",
+          "default": true,
+          "description": "是否启用插件"
+        },
+        "consoleGenerator.semi": {
+          "type": "boolean",
+          "default": true,
+          "description": "是否以分号结尾"
+        },
+        "consoleGenerator.customPrefix.template": {
+          "type": "string",
+          "description": "生成console语句的模板,#i 标识符;#f 展示文件名;#n 展示行号;"
+        },
+        "consoleGenerator.customPrefix.style": {
+          "type": "string",
+          "description": "自定义生成console语句的样式"
+        }
+      }
+    }
   },
   "scripts": {
     "vscode:prepublish": "pnpm run compile",
