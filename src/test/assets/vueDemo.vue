@@ -1,7 +1,14 @@
 /***/
 <script setup lang="ts">
+
+
+
+
 import { ref } from 'vue';
 const name = ref("");
+function getName(name:string){
+    return name
+}
 </script>
 
 <template>

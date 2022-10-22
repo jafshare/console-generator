@@ -15,6 +15,7 @@ function say(name, age) {
 }
 
 const outer = (name) => {
+  console.log("name:",name);
   return (age) => {
     return name + age;
   };

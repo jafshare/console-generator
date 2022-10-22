@@ -7,7 +7,8 @@ import {
   isReturnStatement,
   isExpressionStatement,
 } from "@babel/types";
-function calcPosition(
+import type { Position } from "./index";
+export function calcPosition(
   p: Position | undefined | null,
   p1: Position | undefined | null
 ): Position | undefined | null {
@@ -18,11 +19,7 @@ function calcPosition(
     index: (p.index || 0) + (p1.index || 0),
   };
 }
-export interface Position {
-  line: number;
-  column: number;
-  index?: number;
-}
+
 function generate(code: string, offset: number) {
   const ast = parser(code);
   let identifier = "";
@@ -117,6 +114,6 @@ function deleteConsole(code: string) {
   return positions;
 }
 export const jsHandler = {
-  generate,
+  calcPosition: generate,
   delete: deleteConsole,
 };

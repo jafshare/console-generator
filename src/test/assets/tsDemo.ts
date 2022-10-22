@@ -13,6 +13,7 @@ function say(name: string, age: number) {
 }
 
 const outer = (name: string) => {
+  console.log("name:",name);
   console.log("name:", name);
   console.log(
     "%c name:",

@@ -3,7 +3,8 @@
 import * as vscode from "vscode";
 import { generateConsoleStatement } from "./core/generateConsoleStatement";
 import { getSetting } from "./core/setting";
-import { jsHandler, Position } from "./handler/jsHandler";
+import { getHandler } from "./handler";
+import type { Position, Language } from "./handler";
 
 // This method is called when your extension is activated
 // Your extension is activated the very first time the command is executed
@@ -40,8 +41,12 @@ function generatorHandler() {
     const offset = editor.document.offsetAt(curPos);
     // 获取当前文件的语言
     const language = editor.document.languageId;
+    const languageId = resolveLanguage(language);
+    if (!languageId) return;
+    const handler = getHandler(languageId);
+    if (!handler) return;
     // TODO 如果是选中单词，则直接生成console,如果是只有光标，则需要根据此法环境自动对应的console
-    const { identifier, position } = jsHandler.generate(
+    const { identifier, position } = handler.calcPosition(
       editor.document.getText(),
       offset
     );
@@ -77,7 +82,11 @@ function deleteFileHandler() {
     const offset = editor.document.offsetAt(curPos);
     // 获取当前文件的语言
     const language = editor.document.languageId;
-    const positions = jsHandler.delete(editor.document.getText());
+    const languageId = resolveLanguage(language);
+    if (!languageId) return;
+    const handler = getHandler(languageId);
+    if (!handler) return;
+    const positions = handler.delete(editor.document.getText());
     // 可能不合法为空
     if (!positions.length) return;
     editor.edit((editBuilder) => {
@@ -94,6 +103,21 @@ function deleteFileHandler() {
       `已删除${positions.length}条console语句`
     );
   }
+}
+function resolveLanguage(language: string) {
+  let finalLanguage: Language;
+  switch (language) {
+    case "javascript":
+    case "typescript":
+    case "typescriptreact":
+    case "javascriptreact":
+      finalLanguage = "js";
+      break;
+    case "vue":
+      finalLanguage = "vue";
+  }
+  //@ts-ignore
+  return finalLanguage;
 }
 // This method is called when your extension is deactivated
 export function deactivate() {}

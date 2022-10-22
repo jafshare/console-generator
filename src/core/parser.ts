@@ -1,4 +1,3 @@
-import { window } from "vscode";
 import { parse } from "@babel/parser";
 /**
  * 解析code
@@ -12,8 +11,5 @@ export function parser(code: string) {
     // 设置为module模式，避免解析提示错误
     sourceType: "module",
   });
-  if (ast.errors.length) {
-    window.showErrorMessage(ast.errors[0].code);
-  }
   return ast;
 }
